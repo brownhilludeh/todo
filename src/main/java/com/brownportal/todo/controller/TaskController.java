@@ -1,5 +1,6 @@
 package com.brownportal.todo.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import com.brownportal.todo.model.Task;
 import com.brownportal.todo.service.TaskService;
@@ -18,10 +19,14 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @Value("${spring.application.name}")
+    private String appName;
+
     @GetMapping
     public String getTasks(Model model) {
         List<Task> tasks = taskService.getAllTasks();
         model.addAttribute("tasks", tasks);
+        model.addAttribute("appName", appName);
         return "task/index";
     }
 
